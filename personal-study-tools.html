@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Berean Study Ministry – Personal Study Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f7f2e8;
+    --surface:#fff8ee;
+    --surface2:#f0e8d5;
+    --ink:#1c0a0f;
+    --burgundy:#6b1e2e;
+    --burgundy-light:#8b2e42;
+    --gold:#c9a84c;
+    --gold-light:#e2c47a;
+    --border:rgba(107,30,46,0.15);
+    --shadow:rgba(28,10,15,0.1);
+  }
+  body{background:var(--bg);background-image:radial-gradient(ellipse at 0% 0%,rgba(201,168,76,0.1) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(107,30,46,0.08) 0%,transparent 50%);min-height:100vh;font-family:'Cormorant Garamond',serif;color:var(--ink);padding:2rem 1rem;}
+  .container{max-width:760px;margin:0 auto;}
+
+  .header{text-align:center;margin-bottom:2.4rem;}
+  .ministry-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);color:var(--burgundy);font-weight:600;line-height:1.1;margin-bottom:0.4rem;}
+  .subtitle{font-style:italic;font-size:1.05rem;color:rgba(28,10,15,0.55);}
+  .divider{display:flex;align-items:center;gap:0.8rem;margin:1.2rem auto;max-width:300px;}
+  .divider-line{flex:1;height:1px;}
+  .divider-line.left{background:linear-gradient(to right,transparent,rgba(107,30,46,0.4));}
+  .divider-line.right{background:linear-gradient(to left,transparent,rgba(107,30,46,0.4));}
+  .divider-star{color:var(--burgundy);font-size:0.9rem;}
+
+  /* Nav to other tools */
+  .tools-nav{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+  .tools-nav a{flex:1;min-width:150px;background:var(--surface);color:var(--burgundy);text-decoration:none;padding:0.6rem 0.8rem;border-radius:4px;font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.08em;text-align:center;border:1px solid var(--border);transition:all 0.2s;}
+  .tools-nav a:hover{background:var(--burgundy);color:var(--gold-light);}
+
+  .tabs{display:flex;gap:0.3rem;margin-bottom:1.6rem;background:rgba(107,30,46,0.06);border-radius:6px;padding:0.3rem;flex-wrap:wrap;}
+  .tab-btn{flex:1;min-width:140px;padding:0.7rem 0.6rem;font-family:'Cinzel',serif;font-size:0.66rem;letter-spacing:0.08em;border:none;border-radius:4px;cursor:pointer;transition:all 0.25s;background:transparent;color:rgba(28,10,15,0.45);text-transform:uppercase;}
+  .tab-btn.active{background:linear-gradient(135deg,var(--burgundy) 0%,var(--burgundy-light) 100%);color:var(--gold-light);box-shadow:0 2px 12px rgba(107,30,46,0.3);}
+  .tab-btn:hover:not(.active){color:var(--burgundy);background:rgba(107,30,46,0.06);}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;box-shadow:0 6px 30px var(--shadow);}
+  .tool-section{display:none;}.tool-section.active{display:block;animation:fadeIn 0.35s ease;}
+
+  .tool-header{margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+  .tool-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--burgundy);font-weight:600;margin-bottom:0.3rem;}
+  .tool-desc{font-size:0.95rem;color:rgba(28,10,15,0.55);font-style:italic;}
+
+  .input-area{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .input-label{display:block;font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.15em;color:var(--burgundy);text-transform:uppercase;margin-bottom:0.6rem;}
+  .input-row{display:flex;gap:0.7rem;align-items:flex-start;flex-wrap:wrap;}
+  textarea{flex:1;min-width:200px;min-height:60px;resize:vertical;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);background:transparent;border:none;outline:none;line-height:1.6;}
+  textarea::placeholder{color:rgba(28,10,15,0.28);}
+  .go-btn{background:linear-gradient(135deg,var(--burgundy) 0%,var(--burgundy-light) 100%);color:var(--gold-light);border:none;border-radius:3px;padding:0.6rem 1.5rem;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;box-shadow:0 2px 10px rgba(107,30,46,0.3);transition:all 0.2s;white-space:nowrap;}
+  .go-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(107,30,46,0.4);}
+
+  .result-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--burgundy);border-radius:0 4px 4px 0;padding:1.5rem 1.6rem;display:none;}
+  .result-box.visible{display:block;animation:fadeIn 0.4s ease;}
+  .result-label{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;color:var(--burgundy);text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+  .result-content{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+  .result-content p{margin-bottom:0.4em;}
+  .result-content strong{font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.06em;color:var(--burgundy);}
+
+  .spinner-wrap{display:none;justify-content:center;padding:2rem;}.spinner-wrap.visible{display:flex;}
+  .spinner{width:32px;height:32px;border:2px solid rgba(107,30,46,0.15);border-top:2px solid var(--burgundy);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  .footer{text-align:center;margin-top:2rem;font-style:italic;font-size:0.85rem;color:rgba(28,10,15,0.35);}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="ministry-label">Berean Study Ministry</div>
+    <h1>Personal Study Tools</h1>
+    <p class="subtitle">"Apply thine heart unto instruction, and thine ears to the words of knowledge." — Proverbs 23:12</p>
+    <div class="divider"><div class="divider-line left"></div><span class="divider-star">✦</span><div class="divider-line right"></div></div>
+  </div>
+
+  <div class="tools-nav">
+    <a href="index.html">📖 Scripture Study</a>
+    <a href="sermon-prep-tools.html">✝ Sermon Prep</a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('inductive')">✦ Inductive Study</button>
+    <button class="tab-btn" onclick="switchTab('character')">✧ Character Study</button>
+    <button class="tab-btn" onclick="switchTab('topical')">❧ Topical Study</button>
+  </div>
+
+  <div class="panel">
+
+    <!-- Inductive Study -->
+    <div class="tool-section active" id="section-inductive">
+      <div class="tool-header">
+        <div class="tool-title">Inductive Study Guide</div>
+        <div class="tool-desc">Walk through Observation → Interpretation → Application for any passage</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Bible Passage</label>
+        <div class="input-row">
+          <textarea id="input-inductive" placeholder="e.g. James 1:2-4 or Philippians 4:4-7 or Matthew 5:1-12" onkeydown="handleKey(event,'inductive')"></textarea>
+          <button class="go-btn" onclick="runTool('inductive')">Study →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-inductive"><div class="spinner"></div></div>
+      <div class="result-box" id="result-inductive">
+        <div class="result-label">✦ Inductive Study Notes</div>
+        <div class="result-content" id="content-inductive"></div>
+      </div>
+    </div>
+
+    <!-- Character Study -->
+    <div class="tool-section" id="section-character">
+      <div class="tool-header">
+        <div class="tool-title">Character Study Tool</div>
+        <div class="tool-desc">Deep-dive profiles on any biblical figure — their life, faith, and lessons for today</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Biblical Figure</label>
+        <div class="input-row">
+          <textarea id="input-character" placeholder="e.g. Joseph, Ruth, Paul, David, Esther, Daniel" onkeydown="handleKey(event,'character')"></textarea>
+          <button class="go-btn" onclick="runTool('character')">Study →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-character"><div class="spinner"></div></div>
+      <div class="result-box" id="result-character">
+        <div class="result-label">✦ Character Profile</div>
+        <div class="result-content" id="content-character"></div>
+      </div>
+    </div>
+
+    <!-- Topical Study -->
+    <div class="tool-section" id="section-topical">
+      <div class="tool-header">
+        <div class="tool-title">Topical Study Builder</div>
+        <div class="tool-desc">Enter any topic and get a curated study with key verses, context, and application</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Topic or Theme</label>
+        <div class="input-row">
+          <textarea id="input-topical" placeholder="e.g. forgiveness, prayer, fear, identity in Christ, suffering, marriage" onkeydown="handleKey(event,'topical')"></textarea>
+          <button class="go-btn" onclick="runTool('topical')">Build →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-topical"><div class="spinner"></div></div>
+      <div class="result-box" id="result-topical">
+        <div class="result-label">✦ Topical Study</div>
+        <div class="result-content" id="content-topical"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Proverbs 2:6 — For the Lord gives wisdom; from his mouth come knowledge and understanding</div>
+</div>
+
+<script>
+  const WORKER_URL = 'https://steep-unit-6673.ryanclemont123.workers.dev';
+
+  const prompts = {
+    inductive: i => `You are a Bible study mentor guiding someone through an inductive study of "${i}". Structure it in three clear sections:
+
+**OBSERVATION** — What does the text say?
+- List the key facts, repeated words, and phrases
+- Note who, what, when, where, how
+- Identify the literary structure and flow
+- List any commands, promises, warnings, or examples
+
+**INTERPRETATION** — What does the text mean?
+- What is the main point of this passage?
+- What was the original author communicating to the original audience?
+- How does this passage fit into the bigger picture of Scripture?
+- Explain any difficult words or cultural background
+
+**APPLICATION** — What does this mean for me?
+- What truth from this passage should change how I think?
+- What should I do differently because of this passage?
+- Write a personal response prayer based on this passage
+- One specific action step for this week
+
+Make it personal, practical, and transformational.`,
+
+    character: i => `You are a biblical scholar creating a comprehensive character study of ${i}. Include:
+
+**Background & Context**
+- Who were they? Family, culture, time period
+- Where do we first meet them in Scripture?
+
+**Key Life Events**
+- The 4-5 most significant moments in their story with Scripture references
+
+**Character Traits**
+- Their strengths and how God used them
+- Their weaknesses and failures
+- How they grew or changed
+
+**Their Relationship with God**
+- How did they walk with God?
+- Key moments of faith or doubt
+- What made them significant in God's plan
+
+**Lessons for Today**
+- 3 practical lessons we can learn from their life
+- How their story points to Jesus or the Gospel
+
+**Key Verses** - The most important passages about this person
+
+Make it rich, detailed, and inspiring.`,
+
+    topical: i => `You are a biblical scholar building a comprehensive topical study on "${i}". Include:
+
+**Biblical Definition**
+- How does the Bible define or describe this topic?
+- Old Testament perspective
+- New Testament perspective
+
+**Key Passages** (6-8 verses)
+For each verse include:
+- The verse text
+- Brief context
+- What it teaches about the topic
+
+**Common Misconceptions**
+- What the world says vs. what Scripture says
+
+**Theological Foundation**
+- The deeper biblical truth behind this topic
+- How it connects to the Gospel
+
+**Practical Application**
+- 4 specific ways to apply this truth daily
+- Questions for personal reflection
+- A prayer to close the study
+
+Make it thorough, balanced, and life-changing.`
+  };
+
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['inductive','character','topical'][i]===id));
+    document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('section-'+id).classList.add('active');
+  }
+
+  function handleKey(e,id){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();runTool(id);}}
+
+  function formatText(text){
+    return text.split('\n').map(line=>{
+      if(!line.trim())return '<div style="height:.5em"></div>';
+      line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      line=line.replace(/\*(.*?)\*/g,'<em>$1</em>');
+      return '<p>'+line+'</p>';
+    }).join('');
+  }
+
+  async function runTool(id){
+    const input=document.getElementById('input-'+id).value.trim();
+    if(!input)return;
+    const spinner=document.getElementById('spinner-'+id);
+    const resultBox=document.getElementById('result-'+id);
+    const content=document.getElementById('content-'+id);
+    spinner.classList.add('visible');
+    resultBox.classList.remove('visible');
+    content.innerHTML='';
+    try{
+      const response=await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:[{role:'user',content:prompts[id](input)}]})
+      });
+      const data=await response.json();
+      const text=(data.content||[]).map(b=>b.text||'').join('\n');
+      if(!text)throw new Error(JSON.stringify(data));
+      content.innerHTML=formatText(text);
+      resultBox.classList.add('visible');
+      resultBox.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e){
+      content.innerHTML='<p style="color:#c0392b">Error: '+e.message+'</p>';
+      resultBox.classList.add('visible');
+    }
+    spinner.classList.remove('visible');
+  }
+</script>
+</body>
+</html>
