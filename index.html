@@ -6,49 +6,40 @@
 <title>Berean Study Ministry – Scripture Study Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --parchment: #f5efe0; --cream: #fdf6e3; --ink: #2c1a0e;
-    --gold: #b8860b; --gold-light: #d4a017; --rust: #8b3a1a;
-    --shadow: rgba(44,26,14,0.13);
-  }
-  body { background: var(--parchment); background-image: radial-gradient(ellipse at 10% 0%, #e8d8b055 0%, transparent 60%), radial-gradient(ellipse at 90% 100%, #c8a86833 0%, transparent 60%); min-height: 100vh; font-family: 'Lora', serif; padding: 2rem 1rem; color: var(--ink); }
-  .container { max-width: 720px; margin: 0 auto; }
-  .header { text-align: center; margin-bottom: 2.4rem; }
-  .ministry-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
-  h1 { font-family: 'IM Fell English', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--ink); font-weight: 400; line-height: 1.15; margin-bottom: 0.5rem; }
-  .subtitle { font-style: italic; font-size: 0.9rem; color: rgba(44,26,14,0.55); }
-  .divider { display: flex; align-items: center; gap: 0.8rem; margin: 1.2rem auto; max-width: 320px; }
-  .divider-line { flex: 1; height: 1px; }
-  .divider-line.left { background: linear-gradient(to right, transparent, rgba(184,134,11,0.55)); }
-  .divider-line.right { background: linear-gradient(to left, transparent, rgba(184,134,11,0.55)); }
-  .divider-star { color: var(--gold); font-size: 1rem; }
-  .tabs { display: flex; gap: 0.4rem; margin-bottom: 1.6rem; background: rgba(44,26,14,0.04); border-radius: 6px; padding: 0.3rem; flex-wrap: wrap; }
-  .tab-btn { flex: 1; min-width: 120px; padding: 0.65rem 0.8rem; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.07em; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s; background: transparent; color: rgba(44,26,14,0.6); }
-  .tab-btn.active { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--cream); box-shadow: 0 2px 10px rgba(184,134,11,0.3); }
-  .panel { background: var(--parchment); border-radius: 6px; border: 1px solid rgba(184,134,11,0.2); padding: 1.6rem; box-shadow: 0 6px 30px var(--shadow); }
-  .tool-section { display: none; }
-  .tool-section.active { display: block; animation: fadeIn 0.4s ease; }
-  .input-area { background: var(--cream); border: 1.5px solid rgba(184,134,11,0.4); border-radius: 4px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; box-shadow: inset 0 2px 8px var(--shadow); }
-  .input-label { display: block; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; }
-  .input-row { display: flex; gap: 0.7rem; align-items: flex-start; flex-wrap: wrap; }
-  textarea { flex: 1; min-width: 200px; min-height: 52px; resize: vertical; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--ink); background: transparent; border: none; outline: none; line-height: 1.6; }
-  textarea::placeholder { color: rgba(44,26,14,0.35); }
-  .study-btn { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--cream); border: none; border-radius: 3px; padding: 0.55rem 1.4rem; font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.1em; cursor: pointer; box-shadow: 0 2px 8px rgba(184,134,11,0.35); transition: all 0.2s; white-space: nowrap; }
-  .study-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-  .study-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(184,134,11,0.45); }
-  .result-box { background: var(--cream); border: 1.5px solid rgba(184,134,11,0.3); border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; padding: 1.4rem 1.6rem; box-shadow: 0 4px 20px var(--shadow); display: none; }
-  .result-box.visible { display: block; animation: fadeIn 0.5s ease; }
-  .result-header { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; border-bottom: 1px solid rgba(184,134,11,0.2); padding-bottom: 0.5rem; }
-  .result-content { font-family: 'Lora', serif; font-size: 0.97rem; line-height: 1.85; color: var(--ink); }
-  .result-content p { margin-bottom: 0.4em; }
-  .result-content strong { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--rust); font-weight: 600; }
-  .spinner-wrap { display: none; justify-content: center; padding: 2rem; }
-  .spinner-wrap.visible { display: flex; }
-  .spinner { width: 36px; height: 36px; border: 3px solid rgba(184,134,11,0.25); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 0.9s linear infinite; }
-  .footer { text-align: center; margin-top: 2rem; font-style: italic; font-size: 0.78rem; color: rgba(44,26,14,0.4); }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--parchment:#f5efe0;--cream:#fdf6e3;--ink:#2c1a0e;--gold:#b8860b;--gold-light:#d4a017;--rust:#8b3a1a;--shadow:rgba(44,26,14,0.13)}
+  body{background:var(--parchment);background-image:radial-gradient(ellipse at 10% 0%,#e8d8b055 0%,transparent 60%),radial-gradient(ellipse at 90% 100%,#c8a86833 0%,transparent 60%);min-height:100vh;font-family:'Lora',serif;padding:2rem 1rem;color:var(--ink)}
+  .container{max-width:720px;margin:0 auto}
+  .header{text-align:center;margin-bottom:2.4rem}
+  .ministry-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem}
+  h1{font-family:'IM Fell English',serif;font-size:clamp(1.8rem,5vw,2.8rem);color:var(--ink);font-weight:400;line-height:1.15;margin-bottom:.5rem}
+  .subtitle{font-style:italic;font-size:.9rem;color:rgba(44,26,14,.55)}
+  .divider{display:flex;align-items:center;gap:.8rem;margin:1.2rem auto;max-width:320px}
+  .divider-line{flex:1;height:1px}.divider-line.left{background:linear-gradient(to right,transparent,rgba(184,134,11,.55))}.divider-line.right{background:linear-gradient(to left,transparent,rgba(184,134,11,.55))}
+  .divider-star{color:var(--gold);font-size:1rem}
+  .tabs{display:flex;gap:.4rem;margin-bottom:1.6rem;background:rgba(44,26,14,.04);border-radius:6px;padding:.3rem;flex-wrap:wrap}
+  .tab-btn{flex:1;min-width:120px;padding:.65rem .8rem;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.07em;border:none;border-radius:4px;cursor:pointer;transition:all .2s;background:transparent;color:rgba(44,26,14,.6)}
+  .tab-btn.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--cream);box-shadow:0 2px 10px rgba(184,134,11,.3)}
+  .panel{background:var(--parchment);border-radius:6px;border:1px solid rgba(184,134,11,.2);padding:1.6rem;box-shadow:0 6px 30px var(--shadow)}
+  .tool-section{display:none}.tool-section.active{display:block;animation:fadeIn .4s ease}
+  .input-area{background:var(--cream);border:1.5px solid rgba(184,134,11,.4);border-radius:4px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;box-shadow:inset 0 2px 8px var(--shadow)}
+  .input-label{display:block;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem}
+  .input-row{display:flex;gap:.7rem;align-items:flex-start;flex-wrap:wrap}
+  textarea{flex:1;min-width:200px;min-height:52px;resize:vertical;font-family:'Lora',serif;font-size:.95rem;color:var(--ink);background:transparent;border:none;outline:none;line-height:1.6}
+  textarea::placeholder{color:rgba(44,26,14,.35)}
+  .study-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--cream);border:none;border-radius:3px;padding:.55rem 1.4rem;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 2px 8px rgba(184,134,11,.35);transition:all .2s;white-space:nowrap}
+  .study-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(184,134,11,.45)}
+  .result-box{background:var(--cream);border:1.5px solid rgba(184,134,11,.3);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:1.4rem 1.6rem;box-shadow:0 4px 20px var(--shadow);display:none}
+  .result-box.visible{display:block;animation:fadeIn .5s ease}
+  .result-header{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem;border-bottom:1px solid rgba(184,134,11,.2);padding-bottom:.5rem}
+  .result-content{font-family:'Lora',serif;font-size:.97rem;line-height:1.85;color:var(--ink)}
+  .result-content p{margin-bottom:.4em}
+  .result-content strong{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.05em;color:var(--rust);font-weight:600}
+  .spinner-wrap{display:none;justify-content:center;padding:2rem}.spinner-wrap.visible{display:flex}
+  .spinner{width:36px;height:36px;border:3px solid rgba(184,134,11,.25);border-top:3px solid var(--gold);border-radius:50%;animation:spin .9s linear infinite}
+  .footer{text-align:center;margin-top:2rem;font-style:italic;font-size:.78rem;color:rgba(44,26,14,.4)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -57,11 +48,7 @@
     <div class="ministry-label">Berean Study Ministry</div>
     <h1>Scripture Study Tools</h1>
     <p class="subtitle">"These were more noble… they searched the scriptures daily." — Acts 17:11</p>
-    <div class="divider">
-      <div class="divider-line left"></div>
-      <span class="divider-star">✦</span>
-      <div class="divider-line right"></div>
-    </div>
+    <div class="divider"><div class="divider-line left"></div><span class="divider-star">✦</span><div class="divider-line right"></div></div>
   </div>
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('explainer')">✦ Passage Explainer</button>
@@ -78,10 +65,7 @@
         </div>
       </div>
       <div class="spinner-wrap" id="spinner-explainer"><div class="spinner"></div></div>
-      <div class="result-box" id="result-explainer">
-        <div class="result-header">✦ Study Notes</div>
-        <div class="result-content" id="content-explainer"></div>
-      </div>
+      <div class="result-box" id="result-explainer"><div class="result-header">✦ Study Notes</div><div class="result-content" id="content-explainer"></div></div>
     </div>
     <div class="tool-section" id="section-qa">
       <div class="input-area">
@@ -92,10 +76,7 @@
         </div>
       </div>
       <div class="spinner-wrap" id="spinner-qa"><div class="spinner"></div></div>
-      <div class="result-box" id="result-qa">
-        <div class="result-header">✦ Study Notes</div>
-        <div class="result-content" id="content-qa"></div>
-      </div>
+      <div class="result-box" id="result-qa"><div class="result-header">✦ Study Notes</div><div class="result-content" id="content-qa"></div></div>
     </div>
     <div class="tool-section" id="section-compare">
       <div class="input-area">
@@ -106,94 +87,62 @@
         </div>
       </div>
       <div class="spinner-wrap" id="spinner-compare"><div class="spinner"></div></div>
-      <div class="result-box" id="result-compare">
-        <div class="result-header">✦ Study Notes</div>
-        <div class="result-content" id="content-compare"></div>
-      </div>
+      <div class="result-box" id="result-compare"><div class="result-header">✦ Study Notes</div><div class="result-content" id="content-compare"></div></div>
     </div>
   </div>
   <div class="footer">Study to shew thyself approved unto God — 2 Timothy 2:15</div>
 </div>
 <script>
-  const API_KEY = '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
+  const WORKER_URL = 'https://steep-unit-6673.ryanclemont123.workers.dev';
+
   const prompts = {
-    explainer: (input) => `You are a biblical scholar helping someone study the Bible deeply. For the passage "${input}", provide:
-1. **Historical & Cultural Context** - What was happening at the time? Who wrote it, to whom, and why?
-2. **Key Word Meanings** - Highlight 2-3 important words with their original Hebrew/Greek meaning.
-3. **Cross-References** - List 3-4 related passages that illuminate this text.
-4. **Main Takeaway** - One clear sentence summarizing the spiritual truth.
-Be thorough but accessible. Use Scripture references throughout.`,
-    qa: (input) => `You are a knowledgeable and faithful Bible teacher. Answer this question grounded in Scripture: "${input}"
-- Open with the core biblical answer.
-- Support with 3-5 specific Scripture references.
-- Address any nuance or common misconceptions.
-- Close with a practical application for daily life.
-Keep the tone reverent, clear, and encouraging.`,
-    compare: (input) => `For the Bible verse "${input}", show how it reads across these major translations:
-1. **KJV** (King James Version)
-2. **ESV** (English Standard Version)
-3. **NIV** (New International Version)
-4. **NASB** (New American Standard Bible)
-5. **NLT** (New Living Translation)
-6. **The Message** (paraphrase)
-After each, add a short note on what that translation emphasizes.
-Close with a Key Insight paragraph on what comparing translations reveals.`
+    explainer: i => `You are a biblical scholar helping someone study the Bible deeply. For the passage "${i}", provide:
+1. **Historical & Cultural Context** - Who wrote it, to whom, and why?
+2. **Key Word Meanings** - 2-3 important words with Hebrew/Greek meaning.
+3. **Cross-References** - 3-4 related passages.
+4. **Main Takeaway** - One sentence summary.
+Be thorough but accessible.`,
+    qa: i => `You are a faithful Bible teacher. Answer grounded in Scripture: "${i}". Include 3-5 references, address misconceptions, close with practical application.`,
+    compare: i => `For "${i}", show translations: **KJV**, **ESV**, **NIV**, **NASB**, **NLT**, **The Message**. After each note what it emphasizes. Close with a Key Insight paragraph.`
   };
 
-  function switchTab(id) {
-    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-      btn.classList.toggle('active', ['explainer','qa','compare'][i] === id);
-    });
-    document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
-    document.getElementById('section-' + id).classList.add('active');
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['explainer','qa','compare'][i]===id));
+    document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('section-'+id).classList.add('active');
   }
-
-  function handleKey(e, id) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runTool(id); }
-  }
-
-  function formatText(text) {
-    return text.split('\n').map(line => {
-      if (!line.trim()) return '<div style="height:0.5em"></div>';
-      line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      line = line.replace(/\*(.*?)\*/g, '<em>$1</em>');
-      return '<p>' + line + '</p>';
+  function handleKey(e,id){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();runTool(id);}}
+  function formatText(text){
+    return text.split('\n').map(line=>{
+      if(!line.trim())return '<div style="height:.5em"></div>';
+      line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      line=line.replace(/\*(.*?)\*/g,'<em>$1</em>');
+      return '<p>'+line+'</p>';
     }).join('');
   }
-
-  async function runTool(id) {
-    const input = document.getElementById('input-' + id).value.trim();
-    if (!input) return;
-    const spinner = document.getElementById('spinner-' + id);
-    const resultBox = document.getElementById('result-' + id);
-    const content = document.getElementById('content-' + id);
+  async function runTool(id){
+    const input=document.getElementById('input-'+id).value.trim();
+    if(!input)return;
+    const spinner=document.getElementById('spinner-'+id);
+    const resultBox=document.getElementById('result-'+id);
+    const content=document.getElementById('content-'+id);
     spinner.classList.add('visible');
     resultBox.classList.remove('visible');
-    content.innerHTML = '';
-    try {
-      const payload = {
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompts[id](input) }]
-      };
-      const proxyUrl = 'const proxyUrl = 'https://steep-unit-6673.ryanclemont123.workers.dev';
-      const response = await fetch(proxyUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify(payload)
+    content.innerHTML='';
+    try{
+      const response=await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:[{role:'user',content:prompts[id](input)}]})
       });
-      const data = await response.json();
-      const text = (data.content || []).map(b => b.text || '').join('\n');
-      if (!text) throw new Error('No response');
-      content.innerHTML = formatText(text);
+      const data=await response.json();
+      const text=(data.content||[]).map(b=>b.text||'').join('\n');
+      if(!text)throw new Error(JSON.stringify(data));
+      content.innerHTML=formatText(text);
       resultBox.classList.add('visible');
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch(e) {
-      content.innerHTML = '<p style="color:var(--rust)">Something went wrong: ' + e.message + '</p>';
+      resultBox.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e){
+      content.innerHTML='<p style="color:var(--rust)">Error: '+e.message+'</p>';
       resultBox.classList.add('visible');
     }
     spinner.classList.remove('visible');
