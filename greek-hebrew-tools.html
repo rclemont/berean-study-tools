@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Berean Study Ministry – Greek & Hebrew Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d1117;
+    --surface:#161b22;
+    --surface2:#1c2330;
+    --gold:#c9a84c;
+    --gold-light:#e2c47a;
+    --blue:#4a90d9;
+    --blue-dim:rgba(74,144,217,0.15);
+    --cream:#e8dcc8;
+    --cream-dim:rgba(232,220,200,0.55);
+    --border:rgba(201,168,76,0.18);
+    --shadow:rgba(0,0,0,0.5);
+  }
+  body{background:var(--bg);background-image:radial-gradient(ellipse at 15% 0%,rgba(74,144,217,0.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 100%,rgba(201,168,76,0.08) 0%,transparent 50%);min-height:100vh;font-family:'EB Garamond',serif;color:var(--cream);padding:2rem 1rem;}
+  .container{max-width:760px;margin:0 auto;}
+
+  .header{text-align:center;margin-bottom:2.4rem;}
+  .ministry-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--cream);font-weight:600;line-height:1.2;margin-bottom:0.4rem;letter-spacing:0.05em;}
+  h1 span{color:var(--gold);}
+  .greek-text{font-size:1.4rem;color:rgba(74,144,217,0.7);letter-spacing:0.1em;margin-bottom:0.4rem;}
+  .subtitle{font-style:italic;font-size:1rem;color:var(--cream-dim);}
+  .divider{display:flex;align-items:center;gap:0.8rem;margin:1.2rem auto;max-width:300px;}
+  .divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,0.4),transparent);}
+  .divider-star{color:var(--gold);font-size:0.9rem;}
+
+  .tools-nav{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+  .tools-nav a{flex:1;min-width:120px;background:var(--surface);color:var(--gold);text-decoration:none;padding:0.6rem 0.8rem;border-radius:4px;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.08em;text-align:center;border:1px solid var(--border);transition:all 0.2s;}
+  .tools-nav a:hover{background:rgba(201,168,76,0.1);color:var(--gold-light);}
+
+  .tabs{display:flex;gap:0.3rem;margin-bottom:1.6rem;background:rgba(0,0,0,0.4);border-radius:4px;padding:0.3rem;flex-wrap:wrap;}
+  .tab-btn{flex:1;min-width:160px;padding:0.75rem 0.6rem;font-family:'Cinzel',serif;font-size:0.66rem;letter-spacing:0.08em;border:none;border-radius:3px;cursor:pointer;transition:all 0.25s;background:transparent;color:rgba(232,220,200,0.4);text-transform:uppercase;}
+  .tab-btn.active{background:linear-gradient(135deg,rgba(74,144,217,0.3) 0%,rgba(74,144,217,0.15) 100%);color:var(--gold);box-shadow:0 0 20px rgba(74,144,217,0.15);border:1px solid rgba(74,144,217,0.3);}
+  .tab-btn:hover:not(.active){color:var(--gold);background:rgba(201,168,76,0.05);}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;box-shadow:0 8px 40px var(--shadow);}
+  .tool-section{display:none;}.tool-section.active{display:block;animation:fadeIn 0.35s ease;}
+
+  .tool-header{margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+  .tool-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.05em;margin-bottom:0.3rem;}
+  .tool-desc{font-size:0.95rem;color:var(--cream-dim);font-style:italic;}
+
+  .input-area{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .input-label{display:block;font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  .input-row{display:flex;gap:0.7rem;align-items:flex-start;flex-wrap:wrap;}
+  textarea{flex:1;min-width:200px;min-height:60px;resize:vertical;font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--cream);background:transparent;border:none;outline:none;line-height:1.6;}
+  textarea::placeholder{color:rgba(232,220,200,0.2);}
+  .go-btn{background:linear-gradient(135deg,rgba(74,144,217,0.8) 0%,rgba(74,144,217,0.6) 100%);color:var(--cream);border:1px solid rgba(74,144,217,0.4);border-radius:3px;padding:0.6rem 1.5rem;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;box-shadow:0 2px 10px rgba(74,144,217,0.2);transition:all 0.2s;white-space:nowrap;}
+  .go-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(74,144,217,0.3);background:linear-gradient(135deg,rgba(74,144,217,0.9) 0%,rgba(74,144,217,0.7) 100%);}
+
+  .result-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 4px 4px 0;padding:1.5rem 1.6rem;display:none;}
+  .result-box.visible{display:block;animation:fadeIn 0.4s ease;}
+  .result-label{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+  .result-content{font-family:'EB Garamond',serif;font-size:1.05rem;line-height:1.9;color:var(--cream);}
+  .result-content p{margin-bottom:0.4em;}
+  .result-content strong{font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.06em;color:var(--gold-light);}
+  .result-content em{color:rgba(74,144,217,0.9);}
+
+  .spinner-wrap{display:none;justify-content:center;padding:2rem;}.spinner-wrap.visible{display:flex;}
+  .spinner{width:32px;height:32px;border:2px solid rgba(74,144,217,0.15);border-top:2px solid var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  .footer{text-align:center;margin-top:2rem;font-style:italic;font-size:0.82rem;color:rgba(232,220,200,0.25);}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="ministry-label">Berean Study Ministry</div>
+    <div class="greek-text">Ἑλληνικά · עִברִית</div>
+    <h1>Greek & <span>Hebrew Tools</span></h1>
+    <p class="subtitle">Unlock the depth of God's Word in its original languages</p>
+    <div class="divider"><div class="divider-line"></div><span class="divider-star">✦</span><div class="divider-line"></div></div>
+  </div>
+
+  <div class="tools-nav">
+    <a href="index.html">📖 Scripture Study</a>
+    <a href="sermon-prep-tools.html">✝ Sermon Prep</a>
+    <a href="personal-study-tools.html">🔍 Personal Study</a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('word')">α Word Study Assistant</button>
+    <button class="tab-btn" onclick="switchTab('grammar')">β Grammar Explainer</button>
+  </div>
+
+  <div class="panel">
+
+    <!-- Word Study -->
+    <div class="tool-section active" id="section-word">
+      <div class="tool-header">
+        <div class="tool-title">Word Study Assistant</div>
+        <div class="tool-desc">Look up the original Greek or Hebrew meaning, usage, and root of any biblical word</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Word & Verse Reference</label>
+        <div class="input-row">
+          <textarea id="input-word" placeholder="e.g. 'love' in John 3:16  or  'faith' in Hebrews 11:1  or  'shalom' in Numbers 6:26" onkeydown="handleKey(event,'word')"></textarea>
+          <button class="go-btn" onclick="runTool('word')">Study →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-word"><div class="spinner"></div></div>
+      <div class="result-box" id="result-word">
+        <div class="result-label">α Word Study Results</div>
+        <div class="result-content" id="content-word"></div>
+      </div>
+    </div>
+
+    <!-- Grammar Explainer -->
+    <div class="tool-section" id="section-grammar">
+      <div class="tool-header">
+        <div class="tool-title">Grammar Explainer</div>
+        <div class="tool-desc">Understand why a verb tense, case, or grammatical feature matters for interpretation</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Passage or Grammatical Question</label>
+        <div class="input-row">
+          <textarea id="input-grammar" placeholder="e.g. Why is 'have been saved' in Ephesians 2:8 in perfect tense?  or  What does the aorist tense mean in Romans 6:4?  or  Explain the genitive case in John 1:1" onkeydown="handleKey(event,'grammar')"></textarea>
+          <button class="go-btn" onclick="runTool('grammar')">Explain →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-grammar"><div class="spinner"></div></div>
+      <div class="result-box" id="result-grammar">
+        <div class="result-label">β Grammar Explanation</div>
+        <div class="result-content" id="content-grammar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Psalm 119:130 — The entrance of thy words giveth light; it giveth understanding unto the simple</div>
+</div>
+
+<script>
+  const WORKER_URL = 'https://steep-unit-6673.ryanclemont123.workers.dev';
+
+  const prompts = {
+    word: i => `You are a biblical language scholar. Do a thorough word study for ${i}. Include:
+
+**The Word in Original Language**
+- The original Greek (if NT) or Hebrew (if OT) word
+- Transliteration (how to pronounce it)
+- Strong's number if applicable
+
+**Root & Etymology**
+- What is the root word?
+- What does the root literally mean?
+- How did the word develop over time?
+
+**Range of Meanings**
+- All the ways this word is used in Scripture
+- Different nuances in different contexts
+- How major Bible translations render it
+
+**Key Usage in Scripture**
+- 4-5 other important passages where this word appears
+- What each usage reveals about the word's meaning
+
+**Why It Matters**
+- How does knowing the original word deepen your understanding of the passage?
+- What is lost or gained in translation?
+- What spiritual truth becomes clearer with this knowledge?
+
+Make it scholarly but accessible for a serious Bible student.`,
+
+    grammar: i => `You are a New Testament Greek and Hebrew grammar expert. Answer this question: ${i}
+
+Structure your answer as follows:
+
+**The Grammatical Feature**
+- Name the specific grammatical feature (tense, case, mood, voice, etc.)
+- Give a simple, clear definition of what this feature means
+
+**Why It Matters in This Passage**
+- What does this grammatical feature communicate that a simple English translation might miss?
+- How does it affect the meaning of the verse?
+
+**The Interpretive Impact**
+- What theological truth does this grammatical detail reinforce?
+- How should this change how we read or apply the passage?
+
+**Comparison**
+- How do different Bible translations handle this feature?
+- Which translation captures it best and why?
+
+**A Simple Illustration**
+- Use an everyday example to explain the grammatical concept in plain English
+
+Make it educational, clear, and exciting — showing why original languages bring the Bible to life.`
+  };
+
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['word','grammar'][i]===id));
+    document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('section-'+id).classList.add('active');
+  }
+
+  function handleKey(e,id){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();runTool(id);}}
+
+  function formatText(text){
+    return text.split('\n').map(line=>{
+      if(!line.trim())return '<div style="height:.5em"></div>';
+      line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      line=line.replace(/\*(.*?)\*/g,'<em>$1</em>');
+      return '<p>'+line+'</p>';
+    }).join('');
+  }
+
+  async function runTool(id){
+    const input=document.getElementById('input-'+id).value.trim();
+    if(!input)return;
+    const spinner=document.getElementById('spinner-'+id);
+    const resultBox=document.getElementById('result-'+id);
+    const content=document.getElementById('content-'+id);
+    spinner.classList.add('visible');
+    resultBox.classList.remove('visible');
+    content.innerHTML='';
+    try{
+      const response=await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:[{role:'user',content:prompts[id](input)}]})
+      });
+      const data=await response.json();
+      const text=(data.content||[]).map(b=>b.text||'').join('\n');
+      if(!text)throw new Error(JSON.stringify(data));
+      content.innerHTML=formatText(text);
+      resultBox.classList.add('visible');
+      resultBox.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e){
+      content.innerHTML='<p style="color:#e74c3c">Error: '+e.message+'</p>';
+      resultBox.classList.add('visible');
+    }
+    spinner.classList.remove('visible');
+  }
+</script>
+</body>
+</html>
