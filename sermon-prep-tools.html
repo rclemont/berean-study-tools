@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Berean Study Ministry – Sermon & Teaching Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#1a0e0a;
+    --surface:#231510;
+    --surface2:#2e1a13;
+    --gold:#c9a84c;
+    --gold-light:#e2c47a;
+    --cream:#f5edd9;
+    --cream-dim:rgba(245,237,217,0.6);
+    --rust:#8b3a1a;
+    --border:rgba(201,168,76,0.2);
+    --shadow:rgba(0,0,0,0.4);
+  }
+  body{background:var(--bg);background-image:radial-gradient(ellipse at 20% 0%,rgba(107,30,46,0.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 100%,rgba(139,58,26,0.2) 0%,transparent 50%);min-height:100vh;font-family:'Crimson Pro',serif;color:var(--cream);padding:2rem 1rem;}
+  .container{max-width:760px;margin:0 auto;}
+
+  /* Header */
+  .header{text-align:center;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+  .ministry-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.6rem);color:var(--cream);font-weight:700;line-height:1.15;margin-bottom:0.4rem;}
+  h1 span{color:var(--gold);}
+  .subtitle{font-style:italic;font-size:1rem;color:var(--cream-dim);}
+  .divider{display:flex;align-items:center;gap:0.8rem;margin:1.2rem auto;max-width:280px;}
+  .divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+  .divider-cross{color:var(--gold);font-size:0.9rem;}
+
+  /* Tabs */
+  .tabs{display:flex;gap:0.3rem;margin-bottom:1.8rem;background:rgba(0,0,0,0.3);border-radius:4px;padding:0.3rem;flex-wrap:wrap;}
+  .tab-btn{flex:1;min-width:140px;padding:0.7rem 0.6rem;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.08em;border:none;border-radius:3px;cursor:pointer;transition:all 0.25s;background:transparent;color:rgba(245,237,217,0.5);text-transform:uppercase;}
+  .tab-btn.active{background:linear-gradient(135deg,#6b1e2e 0%,#8b2e42 100%);color:var(--gold);box-shadow:0 2px 12px rgba(107,30,46,0.5);border:1px solid rgba(201,168,76,0.3);}
+  .tab-btn:hover:not(.active){color:var(--gold);background:rgba(201,168,76,0.06);}
+
+  /* Panel */
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;box-shadow:0 8px 40px var(--shadow);}
+  .tool-section{display:none;}.tool-section.active{display:block;animation:fadeIn 0.35s ease;}
+
+  /* Tool header */
+  .tool-header{margin-bottom:1.4rem;}
+  .tool-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);margin-bottom:0.3rem;}
+  .tool-desc{font-size:0.9rem;color:var(--cream-dim);font-style:italic;}
+
+  /* Input area */
+  .input-area{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .input-label{display:block;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  .input-row{display:flex;gap:0.7rem;align-items:flex-start;flex-wrap:wrap;}
+  textarea{flex:1;min-width:200px;min-height:60px;resize:vertical;font-family:'Crimson Pro',serif;font-size:1rem;color:var(--cream);background:transparent;border:none;outline:none;line-height:1.6;}
+  textarea::placeholder{color:rgba(245,237,217,0.25);}
+  .go-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:#1a0e0a;border:none;border-radius:3px;padding:0.6rem 1.5rem;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.1em;cursor:pointer;box-shadow:0 2px 10px rgba(201,168,76,0.3);transition:all 0.2s;white-space:nowrap;font-weight:600;}
+  .go-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,0.4);}
+
+  /* Result */
+  .result-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:1.5rem 1.6rem;display:none;}
+  .result-box.visible{display:block;animation:fadeIn 0.4s ease;}
+  .result-label{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+  .result-content{font-family:'Crimson Pro',serif;font-size:1rem;line-height:1.9;color:var(--cream);}
+  .result-content p{margin-bottom:0.4em;}
+  .result-content strong{font-family:'Cinzel',serif;font-size:0.82rem;letter-spacing:0.06em;color:var(--gold-light);}
+  .result-content em{color:var(--cream-dim);}
+
+  /* Spinner */
+  .spinner-wrap{display:none;justify-content:center;padding:2rem;}.spinner-wrap.visible{display:flex;}
+  .spinner{width:32px;height:32px;border:2px solid rgba(201,168,76,0.2);border-top:2px solid var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  /* Footer */
+  .footer{text-align:center;margin-top:2rem;font-style:italic;font-size:0.82rem;color:rgba(245,237,217,0.3);}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="ministry-label">Berean Study Ministry</div>
+    <h1>Sermon & <span>Teaching Prep</span></h1>
+    <p class="subtitle">Tools to help you rightly divide the Word of Truth</p>
+    <div class="divider"><div class="divider-line"></div><span class="divider-cross">✝</span><div class="divider-line"></div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('outline')">✦ Sermon Outline</button>
+    <button class="tab-btn" onclick="switchTab('illustration')">✧ Illustrations</button>
+    <button class="tab-btn" onclick="switchTab('expository')">❧ Expository Notes</button>
+  </div>
+
+  <div class="panel">
+
+    <!-- Sermon Outline -->
+    <div class="tool-section active" id="section-outline">
+      <div class="tool-header">
+        <div class="tool-title">Sermon Outline Generator</div>
+        <div class="tool-desc">Enter a passage or topic and receive a structured, preachable outline</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Passage or Topic</label>
+        <div class="input-row">
+          <textarea id="input-outline" placeholder="e.g. John 15:1-8 or 'The Armor of God' or Ephesians 6:10-18" onkeydown="handleKey(event,'outline')"></textarea>
+          <button class="go-btn" onclick="runTool('outline')">Prepare →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-outline"><div class="spinner"></div></div>
+      <div class="result-box" id="result-outline">
+        <div class="result-label">✦ Sermon Outline</div>
+        <div class="result-content" id="content-outline"></div>
+      </div>
+    </div>
+
+    <!-- Illustrations -->
+    <div class="tool-section" id="section-illustration">
+      <div class="tool-header">
+        <div class="tool-title">Illustration Finder</div>
+        <div class="tool-desc">Get compelling illustrations and real-life applications for any passage or theme</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Passage or Theme</label>
+        <div class="input-row">
+          <textarea id="input-illustration" placeholder="e.g. Romans 8:28 or 'trusting God in hard times' or 'faith like Abraham'" onkeydown="handleKey(event,'illustration')"></textarea>
+          <button class="go-btn" onclick="runTool('illustration')">Find →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-illustration"><div class="spinner"></div></div>
+      <div class="result-box" id="result-illustration">
+        <div class="result-label">✦ Illustrations & Applications</div>
+        <div class="result-content" id="content-illustration"></div>
+      </div>
+    </div>
+
+    <!-- Expository Notes -->
+    <div class="tool-section" id="section-expository">
+      <div class="tool-header">
+        <div class="tool-title">Expository Notes Builder</div>
+        <div class="tool-desc">Generate detailed verse-by-verse commentary notes for teaching</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Passage</label>
+        <div class="input-row">
+          <textarea id="input-expository" placeholder="e.g. Romans 5:1-5 or Psalm 23 or James 1:2-4" onkeydown="handleKey(event,'expository')"></textarea>
+          <button class="go-btn" onclick="runTool('expository')">Build →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-expository"><div class="spinner"></div></div>
+      <div class="result-box" id="result-expository">
+        <div class="result-label">✦ Expository Notes</div>
+        <div class="result-content" id="content-expository"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">2 Timothy 2:15 — Study to shew thyself approved unto God</div>
+</div>
+
+<script>
+  const WORKER_URL = 'https://steep-unit-6673.ryanclemont123.workers.dev';
+
+  const prompts = {
+    outline: i => `You are an experienced expository preacher helping prepare a sermon. For "${i}", create a complete sermon outline with:
+
+**Title** - A compelling, memorable sermon title
+
+**Introduction** - A hook or opening illustration idea (2-3 sentences)
+
+**Main Points** (3 points, each with):
+- Point heading (alliterated if possible)
+- Key Scripture support
+- Brief explanation (2-3 sentences)
+- Application question
+
+**Conclusion** - How to close and call to action
+
+**Memory Verse** - One key verse to leave with the congregation
+
+Make it practical, biblically grounded, and applicable for men.`,
+
+    illustration: i => `You are a seasoned preacher helping find illustrations for "${i}". Provide:
+
+**3 Powerful Illustrations:**
+For each illustration include:
+- A vivid, relatable story or scenario (everyday life, history, or nature)
+- How it connects to the biblical truth
+- The emotional impact it creates
+
+**3 Real-Life Applications:**
+For each application include:
+- A specific, practical action step
+- Who it applies to
+- What change it produces
+
+**A Closing Challenge** - One powerful statement that drives the message home
+
+Keep illustrations fresh, culturally relevant, and suitable for a men's ministry context.`,
+
+    expository: i => `You are a biblical scholar creating detailed expository teaching notes for "${i}". For each verse provide:
+
+**Verse-by-Verse Breakdown:**
+For each verse include:
+- The verse text
+- **Context** - What's happening in the narrative
+- **Key Words** - Important Greek/Hebrew terms with meanings
+- **Theological Truth** - The main doctrine or principle taught
+- **Application** - How this applies to believers today
+
+**Passage Theme** - The central unifying truth of the passage
+
+**Preaching Points** - 3 key truths to emphasize
+
+**Discussion Questions** - 2-3 questions for group study
+
+Be thorough, scholarly but accessible, and focused on life transformation.`
+  };
+
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['outline','illustration','expository'][i]===id));
+    document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('section-'+id).classList.add('active');
+  }
+
+  function handleKey(e,id){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();runTool(id);}}
+
+  function formatText(text){
+    return text.split('\n').map(line=>{
+      if(!line.trim())return '<div style="height:.5em"></div>';
+      line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      line=line.replace(/\*(.*?)\*/g,'<em>$1</em>');
+      return '<p>'+line+'</p>';
+    }).join('');
+  }
+
+  async function runTool(id){
+    const input=document.getElementById('input-'+id).value.trim();
+    if(!input)return;
+    const spinner=document.getElementById('spinner-'+id);
+    const resultBox=document.getElementById('result-'+id);
+    const content=document.getElementById('content-'+id);
+    spinner.classList.add('visible');
+    resultBox.classList.remove('visible');
+    content.innerHTML='';
+    try{
+      const response=await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:[{role:'user',content:prompts[id](input)}]})
+      });
+      const data=await response.json();
+      const text=(data.content||[]).map(b=>b.text||'').join('\n');
+      if(!text)throw new Error(JSON.stringify(data));
+      content.innerHTML=formatText(text);
+      resultBox.classList.add('visible');
+      resultBox.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e){
+      content.innerHTML='<p style="color:#c0392b">Error: '+e.message+'</p>';
+      resultBox.classList.add('visible');
+    }
+    spinner.classList.remove('visible');
+  }
+</script>
+</body>
+</html>
