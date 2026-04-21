@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Berean Study Ministry – Community & Discipleship Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f4f0e8;
+    --surface:#fffdf7;
+    --surface2:#f0ebe0;
+    --olive:#4a5c2a;
+    --olive-light:#6b8040;
+    --gold:#c9a84c;
+    --gold-light:#e2c47a;
+    --ink:#1e200f;
+    --border:rgba(74,92,42,0.15);
+    --shadow:rgba(30,32,15,0.1);
+  }
+  body{background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,rgba(201,168,76,0.12) 0%,transparent 50%),radial-gradient(ellipse at 90% 100%,rgba(74,92,42,0.1) 0%,transparent 50%);min-height:100vh;font-family:'Libre Baskerville',serif;color:var(--ink);padding:2rem 1rem;}
+  .container{max-width:760px;margin:0 auto;}
+
+  .header{text-align:center;margin-bottom:2.4rem;}
+  .ministry-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(1.5rem,4vw,2.2rem);color:var(--olive);font-weight:600;line-height:1.2;margin-bottom:0.4rem;letter-spacing:0.04em;}
+  h1 span{color:var(--gold);}
+  .subtitle{font-style:italic;font-size:0.95rem;color:rgba(30,32,15,0.55);font-family:'Libre Baskerville',serif;}
+  .divider{display:flex;align-items:center;gap:0.8rem;margin:1.2rem auto;max-width:300px;}
+  .divider-line{flex:1;height:1px;}
+  .divider-line.left{background:linear-gradient(to right,transparent,rgba(74,92,42,0.35));}
+  .divider-line.right{background:linear-gradient(to left,transparent,rgba(74,92,42,0.35));}
+  .divider-star{color:var(--olive);font-size:0.9rem;}
+
+  .tools-nav{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+  .tools-nav a{flex:1;min-width:110px;background:var(--surface);color:var(--olive);text-decoration:none;padding:0.6rem 0.5rem;border-radius:4px;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.07em;text-align:center;border:1px solid var(--border);transition:all 0.2s;}
+  .tools-nav a:hover{background:var(--olive);color:var(--gold-light);}
+
+  .tabs{display:flex;gap:0.3rem;margin-bottom:1.6rem;background:rgba(74,92,42,0.07);border-radius:6px;padding:0.3rem;flex-wrap:wrap;}
+  .tab-btn{flex:1;min-width:160px;padding:0.72rem 0.6rem;font-family:'Cinzel',serif;font-size:0.64rem;letter-spacing:0.08em;border:none;border-radius:4px;cursor:pointer;transition:all 0.25s;background:transparent;color:rgba(30,32,15,0.4);text-transform:uppercase;}
+  .tab-btn.active{background:linear-gradient(135deg,var(--olive) 0%,var(--olive-light) 100%);color:var(--gold-light);box-shadow:0 2px 12px rgba(74,92,42,0.3);}
+  .tab-btn:hover:not(.active){color:var(--olive);background:rgba(74,92,42,0.06);}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;box-shadow:0 6px 30px var(--shadow);}
+  .tool-section{display:none;}.tool-section.active{display:block;animation:fadeIn 0.35s ease;}
+
+  .tool-header{margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+  .tool-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--olive);letter-spacing:0.05em;margin-bottom:0.3rem;}
+  .tool-desc{font-size:0.88rem;color:rgba(30,32,15,0.55);font-style:italic;}
+
+  .input-area{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .input-label{display:block;font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:var(--olive);text-transform:uppercase;margin-bottom:0.6rem;}
+  .input-row{display:flex;gap:0.7rem;align-items:flex-start;flex-wrap:wrap;}
+  textarea{flex:1;min-width:200px;min-height:60px;resize:vertical;font-family:'Libre Baskerville',serif;font-size:0.95rem;color:var(--ink);background:transparent;border:none;outline:none;line-height:1.6;}
+  textarea::placeholder{color:rgba(30,32,15,0.25);}
+  .go-btn{background:linear-gradient(135deg,var(--olive) 0%,var(--olive-light) 100%);color:var(--gold-light);border:none;border-radius:3px;padding:0.6rem 1.5rem;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;cursor:pointer;box-shadow:0 2px 10px rgba(74,92,42,0.25);transition:all 0.2s;white-space:nowrap;}
+  .go-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(74,92,42,0.35);}
+
+  .result-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--olive);border-radius:0 4px 4px 0;padding:1.5rem 1.6rem;display:none;}
+  .result-box.visible{display:block;animation:fadeIn 0.4s ease;}
+  .result-label{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;color:var(--olive);text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+  .result-content{font-family:'Libre Baskerville',serif;font-size:0.95rem;line-height:1.9;color:var(--ink);}
+  .result-content p{margin-bottom:0.4em;}
+  .result-content strong{font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.06em;color:var(--olive);}
+
+  .spinner-wrap{display:none;justify-content:center;padding:2rem;}.spinner-wrap.visible{display:flex;}
+  .spinner{width:32px;height:32px;border:2px solid rgba(74,92,42,0.15);border-top:2px solid var(--olive);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  .footer{text-align:center;margin-top:2rem;font-style:italic;font-size:0.82rem;color:rgba(30,32,15,0.35);}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="ministry-label">Berean Study Ministry</div>
+    <h1>Community & <span>Discipleship</span></h1>
+    <p class="subtitle">"As iron sharpens iron, so one person sharpens another." — Proverbs 27:17</p>
+    <div class="divider"><div class="divider-line left"></div><span class="divider-star">✦</span><div class="divider-line right"></div></div>
+  </div>
+
+  <div class="tools-nav">
+    <a href="index.html">📖 Scripture Study</a>
+    <a href="sermon-prep-tools.html">✝ Sermon Prep</a>
+    <a href="personal-study-tools.html">🔍 Personal Study</a>
+    <a href="greek-hebrew-tools.html">α Greek & Hebrew</a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('discussion')">✦ Discussion Questions</button>
+    <button class="tab-btn" onclick="switchTab('devotional')">✧ Devotional Writer</button>
+  </div>
+
+  <div class="panel">
+
+    <!-- Discussion Questions -->
+    <div class="tool-section active" id="section-discussion">
+      <div class="tool-header">
+        <div class="tool-title">Discussion Question Generator</div>
+        <div class="tool-desc">Create engaging small group questions from any passage or topic</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Passage or Topic</label>
+        <div class="input-row">
+          <textarea id="input-discussion" placeholder="e.g. Romans 12:1-2  or  'forgiveness'  or  James 1:19-20  or  'what it means to be a Berean'" onkeydown="handleKey(event,'discussion')"></textarea>
+          <button class="go-btn" onclick="runTool('discussion')">Generate →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-discussion"><div class="spinner"></div></div>
+      <div class="result-box" id="result-discussion">
+        <div class="result-label">✦ Small Group Questions</div>
+        <div class="result-content" id="content-discussion"></div>
+      </div>
+    </div>
+
+    <!-- Devotional Writer -->
+    <div class="tool-section" id="section-devotional">
+      <div class="tool-header">
+        <div class="tool-title">Devotional Writer</div>
+        <div class="tool-desc">Turn any verse into a short, powerful daily devotional</div>
+      </div>
+      <div class="input-area">
+        <label class="input-label">Verse or Passage</label>
+        <div class="input-row">
+          <textarea id="input-devotional" placeholder="e.g. Psalm 46:10  or  Isaiah 40:31  or  Philippians 4:13  or  John 14:27" onkeydown="handleKey(event,'devotional')"></textarea>
+          <button class="go-btn" onclick="runTool('devotional')">Write →</button>
+        </div>
+      </div>
+      <div class="spinner-wrap" id="spinner-devotional"><div class="spinner"></div></div>
+      <div class="result-box" id="result-devotional">
+        <div class="result-label">✦ Daily Devotional</div>
+        <div class="result-content" id="content-devotional"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Hebrews 10:24 — Let us consider how we may spur one another on toward love and good deeds</div>
+</div>
+
+<script>
+  const WORKER_URL = 'https://steep-unit-6673.ryanclemont123.workers.dev';
+
+  const prompts = {
+    discussion: i => `You are a small group leader creating discussion questions for a men's Bible study on "${i}". Create a complete small group guide:
+
+**Opening Question** (1 question)
+- An easy, non-threatening icebreaker that leads into the topic
+- Something anyone can answer from their own experience
+
+**Observation Questions** (2 questions)
+- Questions that help the group look carefully at what the text actually says
+- "What do you notice about..." or "What stands out to you..."
+
+**Interpretation Questions** (3 questions)
+- Questions that dig into what the passage means
+- Help the group understand the biblical principle
+- One question should address a common misconception or hard truth
+
+**Application Questions** (3 questions)
+- Personal, specific, and challenging
+- "How does this change the way you..."
+- At least one question specifically for men in their roles as husbands, fathers, or leaders
+
+**Prayer Focus**
+- A specific prayer prompt based on the passage
+- Something the group can pray together
+
+Make questions open-ended, thought-provoking, and suitable for a men's ministry setting.`,
+
+    devotional: i => `You are a devotional writer crafting a powerful daily devotional based on "${i}" for men in a Bible study ministry. Write it in this format:
+
+**[Create a compelling title]**
+
+**The Verse**
+Write out the full verse text (use ESV translation)
+
+**Opening Thought**
+A powerful 2-3 sentence hook that grabs attention and connects to real life that men face daily.
+
+**Going Deeper**
+3-4 paragraphs that:
+- Unpack the meaning of the verse in its context
+- Connect it to a man's daily life (work, family, leadership, faith)
+- Share a brief but vivid illustration or real-world scenario
+- Draw out the spiritual truth with depth and warmth
+
+**The Challenge**
+One specific, practical challenge for the day — something a man can actually do before tonight.
+
+**A Prayer**
+A short, heartfelt 3-4 sentence prayer in first person that a man can pray right now.
+
+**Memory Verse**
+The key verse written out one more time to memorize.
+
+Write with strength, warmth, and authenticity — speaking directly to men who want to grow in their faith.`
+  };
+
+  function switchTab(id){
+    document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['discussion','devotional'][i]===id));
+    document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('section-'+id).classList.add('active');
+  }
+
+  function handleKey(e,id){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();runTool(id);}}
+
+  function formatText(text){
+    return text.split('\n').map(line=>{
+      if(!line.trim())return '<div style="height:.5em"></div>';
+      line=line.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      line=line.replace(/\*(.*?)\*/g,'<em>$1</em>');
+      return '<p>'+line+'</p>';
+    }).join('');
+  }
+
+  async function runTool(id){
+    const input=document.getElementById('input-'+id).value.trim();
+    if(!input)return;
+    const spinner=document.getElementById('spinner-'+id);
+    const resultBox=document.getElementById('result-'+id);
+    const content=document.getElementById('content-'+id);
+    spinner.classList.add('visible');
+    resultBox.classList.remove('visible');
+    content.innerHTML='';
+    try{
+      const response=await fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:[{role:'user',content:prompts[id](input)}]})
+      });
+      const data=await response.json();
+      const text=(data.content||[]).map(b=>b.text||'').join('\n');
+      if(!text)throw new Error(JSON.stringify(data));
+      content.innerHTML=formatText(text);
+      resultBox.classList.add('visible');
+      resultBox.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e){
+      content.innerHTML='<p style="color:#c0392b">Error: '+e.message+'</p>';
+      resultBox.classList.add('visible');
+    }
+    spinner.classList.remove('visible');
+  }
+</script>
+</body>
+</html>
